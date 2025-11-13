@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ტექსამყარო | ტექნიკის მაღაზია</title>
+
+  <!-- 🎨 Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+  />
+
+  <!-- 🌿 სტილები -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- 🔝 Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="images/logotech.png" alt="ტექსამყარო">
+      <h1>TechWorld</h1>
+    </div>
+
+    <div class="search-container">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="searchInput" placeholder="მოძებნე პროდუქტი...">
+    </div>
+
+    <button id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+  </header>
+
+  <!-- 📦 Layout -->
+  <div class="container">
+    <!-- 🧭 Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <!-- 📱 მობილურის ძიება -->
+      <div class="mobile-search">
+        <input type="text" id="mobileSearchInput" placeholder="პროდუქტის ძიება...">
+      </div>
+
+      <h3><i class="fa-solid fa-layer-group"></i> კატეგორიები</h3>
+      <ul id="categoryList">
+        <li data-category="ALL" class="active"><i class="fa-solid fa-layer-group"></i> ყველა პროდუქტი</li>
+        <li data-category="MOB"><i class="fa-solid fa-mobile-screen"></i> მობილური ტელეფონები</li>
+        <li data-category="IT"><i class="fa-solid fa-computer"></i> კომპიუტერული ტექნიკა</li>
+        <li data-category="LDA"><i class="fa-solid fa-snowflake"></i> საყინულე/სარეცხი</li>
+        <li data-category="SDA"><i class="fa-solid fa-blender"></i> საყოფაცხოვრებო ნივთები</li>
+        <li data-category="TV"><i class="fa-solid fa-tv"></i> ტელევიზორები</li>
+      </ul>
+
+      <div id="filterSection"></div>
+    </aside>
+
+    <!-- 💻 მთავარი ნაწილი -->
+    <main class="main-content">
+      <section class="hero">
+        <h2><i class="fa-solid fa-store"></i> კეთილი იყოს თქვენი მობრძანება ტექსამყაროში!</h2>
+        <p>იპოვე საუკეთესო ტექნიკა საუკეთესო ფასად.</p>
+      </section>
+
+      <section id="productGrid" class="product-grid"></section>
+    </main>
+  </div>
+
+  <!-- ⚙️ Footer -->
+  <footer>
+    <p>© 2025 TechWorld. ყველა უფლება დაცულია.</p>
+  </footer>
+
+  <!-- ⚡ JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

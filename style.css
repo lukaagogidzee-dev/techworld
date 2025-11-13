@@ -1,0 +1,569 @@
+/* =============================
+   🌿 ზოგადი სტილები
+============================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", "Noto Sans Georgian", sans-serif;
+}
+
+body {
+  background: #f9fafb;
+  color: #111827;
+  overflow-x: hidden;
+}
+
+/* =============================
+   🌱 Header
+============================= */
+.header {
+  background-color: #22c55e;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background 0.3s ease;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  width: 50px;
+  height: 50px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border-radius: 12px;
+  padding: 0.4rem 0.8rem;
+}
+
+.search-container i {
+  color: #22c55e;
+  font-size: 1.1rem;
+}
+
+.search-container input {
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  width: 260px;
+  color: #111827;
+}
+
+#menuToggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.7rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#menuToggle:hover {
+  transform: scale(1.1);
+}
+
+/* =============================
+   🧭 Sidebar
+============================= */
+.container {
+  display: flex;
+  min-height: calc(100vh - 80px);
+}
+
+.sidebar {
+  width: 260px;
+  background-color: #e8fce8;
+  padding: 1.5rem;
+  border-right: 2px solid #d1fadf;
+  transition: transform 0.4s ease;
+}
+
+.sidebar h3 {
+  color: #16a34a;
+  margin-bottom: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar h3 i {
+  color: #16a34a;
+  font-size: 1rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar li {
+  padding: 0.6rem 0.7rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.sidebar li:hover,
+.sidebar li.active {
+  background: #bbf7d0;
+  color: #065f46;
+}
+
+/* =============================
+   🎚 ფილტრები
+============================= */
+.filter-group {
+  margin-bottom: 1.5rem;
+}
+
+.filter-group h4 {
+  color: #15803d;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter-group h4 i {
+  color: #16a34a;
+}
+
+.filter-content label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  cursor: pointer;
+}
+
+.filter-content input[type="checkbox"] {
+  accent-color: #22c55e;
+}
+
+/* ფასის სლაიდერი */
+.price-range {
+  position: relative;
+  height: 5px;
+  background: #d1d5db;
+  border-radius: 5px;
+  margin: 1rem 0 0.5rem;
+}
+
+.price-range input[type="range"] {
+  position: absolute;
+  width: 100%;
+  top: -7px;
+  height: 5px;
+  background: none;
+  pointer-events: none;
+  appearance: none;
+}
+
+.price-range input::-webkit-slider-thumb {
+  pointer-events: all;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #22c55e;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.slider-track {
+  position: absolute;
+  height: 5px;
+  background: #22c55e;
+  border-radius: 5px;
+  top: 0;
+}
+
+.price-values {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #065f46;
+}
+
+/* Reset Button */
+.reset-btn {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reset-btn i {
+  font-size: 1rem;
+}
+
+.reset-btn:hover {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+}
+
+/* =============================
+   🛒 პროდუქტები
+============================= */
+.main-content {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+.hero {
+  text-align: center;
+  background: linear-gradient(135deg, #86efac, #22c55e);
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  justify-items: center;
+  align-items: start;
+  transition: all 0.3s ease;
+}
+
+.product {
+  background: #fff;
+  border: 2px solid #b7f7c1;
+  border-radius: 12px;
+  text-align: center;
+  padding: 1rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 250px;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.product img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  background-color: #f3f4f6;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.product h3 {
+  font-size: 1rem;
+  color: #111827;
+  margin-bottom: 5px;
+}
+
+.product p {
+  color: #16a34a;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* =============================
+   ⚙️ Footer
+============================= */
+footer {
+  background-color: #22c55e;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+/* =============================
+   📄 Pagination
+============================= */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: #065f46;
+}
+
+.pagination button {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.pagination button i {
+  font-size: 0.9rem;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+}
+
+.pagination button:disabled {
+  background: #cbd5e1;
+  color: #6b7280;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.pagination span {
+  color: #15803d;
+  font-weight: 500;
+}
+
+/* =============================
+   📱 მობილური ვერსია
+============================= */
+@media (max-width: 768px) {
+  .header {
+    padding: 0.7rem 1rem;
+  }
+
+  .search-container {
+    display: none;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 60px);
+    background: #ffffff;
+    transform: translateY(-20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.3, 1);
+    z-index: 9;
+    overflow-y: auto;
+  }
+
+  .sidebar.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .container {
+    margin-top: 70px;
+    flex-direction: column;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .product {
+    max-width: 180px;
+    min-height: 300px;
+    padding: 0.8rem;
+  }
+
+  .product img {
+    height: 160px;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .pagination button {
+    width: 80%;
+  }
+}
+
+/* =============================
+   ✨ ანიმაციები
+============================= */
+.fade-out {
+  opacity: 0;
+  transform: scale(0.98);
+  transition: all 0.2s ease-out;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.3s ease-in;
+}
+/* =============================
+   📱 მობილურის ძიება (დამატებული)
+============================= */
+.mobile-search {
+  display: none;
+  padding: 1rem;
+  background: #f0fdf4;
+  border-radius: 10px;
+  margin-top: 1rem;
+}
+
+.mobile-search input {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: 2px solid #bbf7d0;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  color: #065f46;
+}
+
+.mobile-search input:focus {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+}
+
+/* მობილურზე გამოჩნდეს მხოლოდ მენიუს გახსნისას */
+@media (max-width: 768px) {
+  .sidebar.active .mobile-search {
+    display: block;
+  }
+}
+/* =============================
+   ✨ მობილურის ძიების ანიმაცია
+============================= */
+@keyframes fadeInSearch {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* როცა Sidebar აქტიურია და გამოჩნდება მობილურის ძიება */
+@media (max-width: 768px) {
+  .sidebar.active .mobile-search {
+    display: block;
+    animation: fadeInSearch 0.4s ease forwards;
+  }
+}
+/* =============================
+   ✨ მობილურის ძიების ვიზუალური გაუმჯობესება + ანიმაცია
+============================= */
+.mobile-search {
+  display: none;
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 12px;
+  margin-top: 1rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.mobile-search input {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: 2px solid #bbf7d0;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  color: #065f46;
+  background: #f9fafb;
+}
+
+.mobile-search input:focus {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+}
+
+/* 🌀 ნაზი გამოჩენა */
+@keyframes fadeInSearch {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* მობილურზე გამოჩენა */
+@media (max-width: 768px) {
+  .sidebar.active .mobile-search {
+    display: block;
+    animation: fadeInSearch 0.4s ease forwards;
+  }
+}
+.product {
+  cursor: pointer;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+  background: #fff;
+}
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+.product-img img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.product-info {
+  padding: 10px 15px;
+  text-align: center;
+}
+.product-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.product-brand {
+  color: #666;
+  font-size: 0.9rem;
+}
+.product-price {
+  color: #16a34a;
+  font-weight: bold;
+  margin-top: 8px;
+}

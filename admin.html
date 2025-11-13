@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>პროდუქტის დამატება | TechWorld Admin</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🛒 პროდუქტის დამატება</h1>
+    <form id="productForm">
+      <input type="text" id="title" placeholder="მოდელის სახელი" required>
+      <input type="text" id="brand" placeholder="ბრენდი" required>
+      <input type="number" id="price" placeholder="ფასი ₾" required>
+
+      <select id="category" required>
+        <option value="">აირჩიე კატეგორია</option>
+        <option value="MOB">📱 მობილური</option>
+        <option value="IT">💻 კომპიუტერი</option>
+        <option value="TV">📺 ტელევიზორი</option>
+        <option value="LDA">🏠 დიდი საყოფაცხოვრებო</option>
+        <option value="SDA">🍳 მცირე საყოფაცხოვრებო</option>
+      </select>
+
+      <input type="text" id="img" placeholder="სურათის ბმული (images/filename.jpg)">
+      <button type="submit">➕ დაამატე პროდუქტი</button>
+    </form>
+
+    <div id="message"></div>
+
+    <hr>
+
+    <h2>📋 დამატებული პროდუქტები</h2>
+    <div id="productList"></div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
