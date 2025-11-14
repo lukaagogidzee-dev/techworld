@@ -79,7 +79,7 @@ body {
 }
 
 /* =============================
-   🧭 Sidebar
+   🧭 Sidebar base
 ============================= */
 .container {
   display: flex;
@@ -91,7 +91,8 @@ body {
   background-color: #e8fce8;
   padding: 1.5rem;
   border-right: 2px solid #d1fadf;
-  transition: transform 0.4s ease;
+  transition: width 0.25s ease, padding 0.25s ease;
+  z-index: 50;
 }
 
 .sidebar h3 {
@@ -110,13 +111,22 @@ body {
 .sidebar ul {
   list-style: none;
   margin-bottom: 1.5rem;
+  padding-left: 0;
 }
 
 .sidebar li {
   padding: 0.6rem 0.7rem;
   cursor: pointer;
   border-radius: 8px;
-  transition: 0.3s;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar li i {
+  min-width: 24px;
+  text-align: center;
 }
 
 .sidebar li:hover,
@@ -240,6 +250,7 @@ body {
   margin-bottom: 2rem;
 }
 
+/* default desktop grid (we'll toggle classes .grid-open/.grid-closed) */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -249,6 +260,7 @@ body {
   transition: all 0.3s ease;
 }
 
+/* product card */
 .product {
   background: #fff;
   border: 2px solid #b7f7c1;
@@ -294,7 +306,7 @@ body {
 }
 
 /* =============================
-   ⚙️ Footer
+   ⚙️ Footer & Pagination
 ============================= */
 footer {
   background-color: #22c55e;
@@ -304,9 +316,6 @@ footer {
   margin-top: 2rem;
 }
 
-/* =============================
-   📄 Pagination
-============================= */
 .pagination {
   display: flex;
   justify-content: center;
@@ -332,10 +341,6 @@ footer {
   transition: all 0.3s ease;
 }
 
-.pagination button i {
-  font-size: 0.9rem;
-}
-
 .pagination button:hover:not(:disabled) {
   background: linear-gradient(135deg, #16a34a, #15803d);
   transform: translateY(-2px);
@@ -355,7 +360,7 @@ footer {
 }
 
 /* =============================
-   📱 მობილური ვერსია
+   📱 მობილური ვერსია (unchanged)
 ============================= */
 @media (max-width: 768px) {
   .header {
@@ -377,7 +382,7 @@ footer {
     opacity: 0;
     pointer-events: none;
     transition: all 0.4s cubic-bezier(0.25, 1, 0.3, 1);
-    z-index: 9;
+    z-index: 900;
     overflow-y: auto;
   }
 
@@ -415,155 +420,325 @@ footer {
   .pagination button {
     width: 80%;
   }
+
+  .mobile-search {
+    display: block;
+    padding: 1rem;
+    background: #ffffff;
+    border-radius: 12px;
+    margin-top: 1rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+  }
 }
 
 /* =============================
-   ✨ ანიმაციები
+   ✨ ანიმაციები და UI ფენები
 ============================= */
-.fade-out {
+.fade-out { opacity: 0; transform: scale(0.98); transition: all 0.2s ease-out; }
+.fade-in { opacity: 1; transform: scale(1); transition: all 0.3s ease-in; }
+
+/* =============================
+   🖥️ DESKTOP SIDEBAR TOGGLE (NEW)
+============================= */
+@media (min-width: 769px) {
+
+  /* COLLAPSED (60px, icons only) */
+  .sidebar.desktop-closed {
+    width: 60px;
+    padding: 1.2rem 0.5rem;
+    overflow: visible;
+  }
+
+  .sidebar.desktop-closed .sidebar-text,
+  .sidebar.desktop-closed h3 .sidebar-text {
+    display: none;
+    opacity: 0;
+  }
+
+  .sidebar.desktop-closed li {
+    justify-content: center;
+    padding: 0.6rem 0;
+  }
+
+  .sidebar.desktop-closed li i {
+    font-size: 1.25rem;
+  }
+
+  /* TOOLTIP */
+  .sidebar.desktop-closed li {
+    position: relative;
+  }
+
+  .sidebar.desktop-closed li::after {
+    content: '';
+    display: none;
+  }
+
+  .sidebar.desktop-closed li:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #111827;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    z-index: 1000;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  }
+
+  /* EXPANDED */
+  .sidebar.desktop-open {
+    width: 260px;
+    padding: 1.5rem;
+  }
+
+  /* When expanded show text normally */
+  .sidebar.desktop-open .sidebar-text { display: inline-block; opacity: 1; }
+
+  /* Product grid states */
+  .product-grid.grid-open { grid-template-columns: repeat(4, 1fr) !important; }
+  .product-grid.grid-closed { grid-template-columns: repeat(6, 1fr) !important; }
+
+}
+@media (min-width: 769px) {
+  .mobile-search {
+    display: none !important;
+  }
+}
+/* Tooltip Base */
+.sidebar li {
+  position: relative;
+}
+
+.tooltip {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #2a2a2a;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  white-space: nowrap;
   opacity: 0;
-  transform: scale(0.98);
-  transition: all 0.2s ease-out;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transform-origin: left center;
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
-.fade-in {
+/* Tooltip visible */
+.sidebar.collapsed li:hover .tooltip {
   opacity: 1;
-  transform: scale(1);
-  transition: all 0.3s ease-in;
+  transform: translateY(-50%) translateX(6px);
 }
-/* =============================
-   📱 მობილურის ძიება (დამატებული)
-============================= */
-.mobile-search {
+
+/* Arrow */
+.tooltip::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent #2a2a2a transparent transparent;
+}
+
+/* Tooltip hides when sidebar is expanded */
+.sidebar:not(.collapsed) .tooltip {
   display: none;
-  padding: 1rem;
-  background: #f0fdf4;
+}
+/* Tooltip Base – premium glass style */
+.tooltip {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  background: rgba(40, 40, 40, 0.75);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  padding: 6px 14px;
   border-radius: 10px;
-  margin-top: 1rem;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  transform-origin: left center;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.mobile-search input {
-  width: 100%;
-  padding: 0.6rem 1rem;
-  border: 2px solid #bbf7d0;
-  border-radius: 10px;
-  font-size: 1rem;
-  outline: none;
-  color: #065f46;
+/* Tooltip visible only when sidebar is collapsed */
+.sidebar.collapsed li:hover .tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(10px);
 }
 
-.mobile-search input:focus {
-  border-color: #22c55e;
-  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+/* Tooltip Arrow (glass effect) */
+.tooltip::after {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent rgba(40,40,40,0.75) transparent transparent;
 }
 
-/* მობილურზე გამოჩნდეს მხოლოდ მენიუს გახსნისას */
-@media (max-width: 768px) {
-  .sidebar.active .mobile-search {
-    display: block;
-  }
+/* Tooltip hidden in expanded mode */
+.sidebar:not(.collapsed) .tooltip {
+  display: none !important;
 }
-/* =============================
-   ✨ მობილურის ძიების ანიმაცია
-============================= */
-@keyframes fadeInSearch {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* როცა Sidebar აქტიურია და გამოჩნდება მობილურის ძიება */
-@media (max-width: 768px) {
-  .sidebar.active .mobile-search {
-    display: block;
-    animation: fadeInSearch 0.4s ease forwards;
-  }
-}
-/* =============================
-   ✨ მობილურის ძიების ვიზუალური გაუმჯობესება + ანიმაცია
-============================= */
-.mobile-search {
-  display: none;
-  padding: 1rem;
-  background: #ffffff;
-  border-radius: 12px;
-  margin-top: 1rem;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-}
-
-.mobile-search input {
-  width: 100%;
-  padding: 0.6rem 1rem;
-  border: 2px solid #bbf7d0;
-  border-radius: 10px;
-  font-size: 1rem;
-  outline: none;
-  color: #065f46;
-  background: #f9fafb;
-}
-
-.mobile-search input:focus {
-  border-color: #22c55e;
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
-}
-
-/* 🌀 ნაზი გამოჩენა */
-@keyframes fadeInSearch {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* მობილურზე გამოჩენა */
-@media (max-width: 768px) {
-  .sidebar.active .mobile-search {
-    display: block;
-    animation: fadeInSearch 0.4s ease forwards;
-  }
-}
-.product {
-  cursor: pointer;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
+/* Sidebar transition */
+.sidebar {
+  width: 240px;
+  transition: width 0.35s ease, padding 0.3s ease;
   overflow: hidden;
-  background: #fff;
 }
-.product:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+
+/* Collapsed sidebar */
+.sidebar.collapsed {
+  width: 70px;
 }
-.product-img img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+
+/* Text fade animation */
+.sidebar .sidebar-text {
+  opacity: 1;
+  transition: opacity 0.25s ease;
 }
-.product-info {
-  padding: 10px 15px;
-  text-align: center;
+
+.sidebar.collapsed .sidebar-text {
+  opacity: 0;
 }
-.product-title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 5px;
+
+/* Category Items Smooth Movement */
+.sidebar li {
+  transition: padding 0.3s ease, background 0.25s ease;
 }
-.product-brand {
-  color: #666;
-  font-size: 0.9rem;
+
+.sidebar.collapsed li {
+  padding-left: 14px;
 }
-.product-price {
-  color: #16a34a;
-  font-weight: bold;
-  margin-top: 8px;
+
+.sidebar:not(.collapsed) li {
+  padding-left: 20px;
+}
+
+/* Icon smooth scaling */
+.sidebar i {
+  transition: transform 0.25s ease;
+}
+
+.sidebar.collapsed i {
+  transform: scale(1.05);
+}
+/* COLLAPSED SIDEBAR ICON FIX */
+.sidebar.collapsed ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar.collapsed ul li {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background: transparent !important;
+}
+
+/* no text in collapsed mode */
+.sidebar.collapsed .sidebar-text {
+    display: none !important;
+}
+
+/* remove active highlight while collapsed */
+.sidebar.collapsed ul li.active {
+    background: transparent !important;
+}
+
+/* icons centered */
+.sidebar.collapsed ul li i {
+    font-size: 24px;
+    margin: 0 !important;
+}
+/* =========================================
+   1) Smooth Sidebar Slide Animation
+========================================= */
+@media (min-width: 769px) {
+    .sidebar {
+        transition: width 0.35s cubic-bezier(0.25, 1, 0.3, 1),
+                    padding 0.3s ease,
+                    background-color 0.25s ease;
+    }
+
+    /* Collapsed 상태 */
+    .sidebar.collapsed {
+        width: 70px !important;
+        padding: 1.2rem 0.5rem !important;
+    }
+
+    /* Expanded 상태 */
+    .sidebar:not(.collapsed) {
+        width: 260px;
+    }
+}
+
+/* =========================================
+   2) Nicer Hover Effects (desktop only)
+========================================= */
+@media (min-width: 769px) {
+    .sidebar li {
+        transition: background 0.25s ease, transform 0.25s ease;
+    }
+
+    /* Hover - subtle lift */
+    .sidebar:not(.collapsed) li:hover {
+        background: #c8f7d1;
+        transform: translateX(4px);
+    }
+
+    /* Icons smooth color + scale */
+    .sidebar li i {
+        transition: color 0.25s ease, transform 0.25s ease;
+    }
+
+    .sidebar:not(.collapsed) li:hover i {
+        color: #0f7a3d;
+        transform: scale(1.12);
+    }
+}
+
+/* =========================================
+   4) Brand Filters – fade & slide animation
+========================================= */
+.filter-content label {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* When sidebar collapses → filters fade out softly */
+.sidebar.collapsed .filter-content label {
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+}
+
+/* Filters fade back in on expand */
+.sidebar:not(.collapsed) .filter-content label {
+    opacity: 1;
+    transform: translateY(0px);
 }
