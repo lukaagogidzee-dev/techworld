@@ -1,4 +1,4 @@
-/* =============================
+ /* =============================
    🌿 ზოგადი სტილები
 ============================= */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -742,3 +742,156 @@ footer {
     opacity: 1;
     transform: translateY(0px);
 }
+@media (max-width: 768px) {
+
+    /* Reset all desktop collapse effects */
+    .sidebar {
+        width: 100% !important;
+        height: calc(100vh - 60px);
+        position: fixed;
+        top: 60px;
+        left: 0;
+        background: #ffffff;
+        padding: 1.5rem !important;
+        transform: translateY(-20px);
+        opacity: 0;
+        pointer-events: none;
+        overflow-y: auto;
+        transition: all 0.35s cubic-bezier(0.25, 1, 0.3, 1) !important;
+    }
+
+    /* When active → visible */
+    .sidebar.active {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Sidebar text always visible on mobile */
+    .sidebar .sidebar-text {
+        display: inline-block !important;
+        opacity: 1 !important;
+    }
+
+    /* Icons normal size */
+    .sidebar i {
+        transform: scale(1) !important;
+    }
+
+    /* List items full width */
+    .sidebar ul li {
+        display: flex;
+        justify-content: flex-start;
+        padding: 0.7rem 0.8rem !important;
+        background: none !important;
+        border-radius: 10px;
+    }
+
+    /* Hover on mobile not needed */
+    .sidebar ul li:hover {
+        transform: none !important;
+    }
+
+    /* Tooltips disabled on mobile */
+    .tooltip {
+        display: none !important;
+    }
+
+    /* ==============================
+   🌟 Mobile Search Bar Stylish
+============================== */
+.mobile-search {
+  display: block !important;
+  position: relative;
+  margin: 1rem;
+}
+
+.mobile-search input {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 1rem; /* room for clear button */
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+  color: #111827;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  background-color: #ffffff;
+  transition: all 0.25s ease;
+}
+
+.mobile-search input::placeholder {
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.mobile-search input:focus {
+  outline: none;
+  border-color: #22c55e;
+  box-shadow: 0 6px 16px rgba(34,197,94,0.3);
+}
+
+.mobile-clear-btn {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.mobile-clear-btn:hover {
+  color: #111827;
+}
+
+
+    /* Desktop search hidden */
+    .desktop-only {
+        display: none !important;
+    }
+
+    /* Product grid spacing */
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+}
+/* ==============================
+   🌟 Mobile Search Overlay + Clear Button
+============================== */
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  background: rgba(0,0,0,0.4);
+  z-index: 850;
+}
+
+.mobile-clear-btn {
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #888;
+  cursor: pointer;
+}
+
+.mobile-search { position: relative; }
+
+/* ==============================
+   🌟 Desktop Live Search Highlight
+============================== */
+.highlight {
+  background-color: #ffeaa7;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
