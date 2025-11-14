@@ -1,5 +1,5 @@
 // ===============================
-// 📦 პროდუქციის ჩატვირთვა JSON-დან
+// DOM References
 // ===============================
 const grid = document.getElementById("productGrid");
 const categoryList = document.getElementById("categoryList");
@@ -14,7 +14,7 @@ let filters = { search: "", category: "ALL", brands: [], minPrice: 0, maxPrice: 
 let currentPage = 1;
 const productsPerPage = 8;
 
-// 📑 კატეგორიების შესაბამისი ბრენდები
+// category -> brands map
 const categoryBrands = {
   "MOB": ["Apple", "Samsung", "Xiaomi", "Huawei", "OnePlus"],
   "IT": ["Dell", "HP", "Asus", "Lenovo", "Acer", "MSI"],
@@ -24,39 +24,101 @@ const categoryBrands = {
 };
 
 // ===============================
-// 🌐 პროდუქტების წამოღება JSON-დან
+// Load products.json (if exists)
 // ===============================
 async function loadProducts() {
   try {
     const response = await fetch("products.json");
     if (!response.ok) throw new Error("პროდუქციის ფაილი ვერ ჩაიტვირთა 😕");
     products = await response.json();
-    renderFilters();
-    renderProducts();
   } catch (err) {
     console.error(err);
+    products = []; // continue gracefully
     if (grid) grid.innerHTML = `<p style="color:red; text-align:center;">❌ ${err.message}</p>`;
+  } finally {
+    // initial render after load (or no file)
+    setupTooltips();
+    applyInitialGridState();
+    renderFilters();
+    renderProducts();
   }
 }
 
-// 🚀 ვიძახებ ჩატვირთვას (მხოლოდ მთავარ გვერდზე)
+// Only call if productGrid exists
 if (document.getElementById("productGrid")) loadProducts();
 
 // ===============================
-// 📱 მენიუს ღილაკი
+// Sidebar toggle logic (mobile + desktop safe)
 // ===============================
-menuToggle?.addEventListener("click", () => sidebar.classList.toggle("active"));
+menuToggle?.addEventListener("click", () => {
+  if (window.innerWidth <= 768) {
+    // Mobile behavior: unchanged overlay
+    sidebar.classList.toggle("active");
+    return;
+  }
 
-// 📱 მობილურის ძიების ველი
+  // Desktop toggle
+  sidebar.classList.toggle("desktop-open");
+  sidebar.classList.toggle("desktop-closed");
+
+  // NEW: collapsed class (for tooltip + icon-only mode)
+  sidebar.classList.toggle("collapsed");
+
+  if (sidebar.classList.contains("desktop-open")) {
+    productGrid.classList.remove("grid-closed");
+    productGrid.classList.add("grid-open");
+    renderFilters();
+  } else {
+    productGrid.classList.remove("grid-open");
+    productGrid.classList.add("grid-closed");
+    filterSection.innerHTML = "";
+  }
+});
+
+// Ensure correct behavior on window resize
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 768) {
+    if (!sidebar.classList.contains("desktop-open") && !sidebar.classList.contains("desktop-closed")) {
+      sidebar.classList.add("desktop-closed");
+      sidebar.classList.add("collapsed"); // ensure collapsed on desktop by default
+    }
+
+    if (sidebar.classList.contains("desktop-open")) {
+      productGrid.classList.add("grid-open");
+      productGrid.classList.remove("grid-closed");
+      sidebar.classList.remove("collapsed"); // expanded → no collapsed
+    } else {
+      productGrid.classList.add("grid-closed");
+      productGrid.classList.remove("grid-open");
+      sidebar.classList.add("collapsed"); // closed → collapsed
+    }
+
+    sidebar.classList.remove("active");
+  } else {
+    productGrid.classList.remove("grid-open", "grid-closed");
+    sidebar.classList.remove("desktop-open", "desktop-closed", "collapsed");
+  }
+});
+
+// ===============================
+// Setup tooltips for each li
+// ===============================
+function setupTooltips() {
+  document.querySelectorAll("#categoryList li").forEach(li => {
+    const text = li.querySelector(".sidebar-text")?.textContent?.trim() || "";
+    li.setAttribute("data-tooltip", text);
+  });
+}
+
+// ===============================
+// Search inputs
+// ===============================
 mobileSearchInput?.addEventListener("input", e => {
   filters.search = e.target.value;
   currentPage = 1;
   renderProducts();
 });
 
-// ===============================
-// 🔍 საძიებო ველი
-// ===============================
 searchInput?.addEventListener("input", e => {
   filters.search = e.target.value;
   currentPage = 1;
@@ -64,25 +126,38 @@ searchInput?.addEventListener("input", e => {
 });
 
 // ===============================
-// 🗂 კატეგორიები
+// Category selection
 // ===============================
 categoryList?.addEventListener("click", e => {
-  if (e.target.tagName === "LI") {
-    document.querySelectorAll("#categoryList li").forEach(li => li.classList.remove("active"));
-    e.target.classList.add("active");
-    filters.category = e.target.dataset.category;
-    filters.brands = [];
-    currentPage = 1;
+  const li = e.target.closest("li");
+  if (!li) return;
+
+  document.querySelectorAll("#categoryList li").forEach(n => n.classList.remove("active"));
+  li.classList.add("active");
+
+  filters.category = li.dataset.category || "ALL";
+  filters.brands = [];
+  currentPage = 1;
+
+  if (window.innerWidth > 768 && sidebar.classList.contains("desktop-closed")) {
+    filterSection.innerHTML = "";
+  } else {
     renderFilters();
-    renderProducts();
   }
+
+  renderProducts();
 });
 
 // ===============================
-// 🎚 ფილტრები
+// Render Filters
 // ===============================
 function renderFilters() {
   if (!filterSection) return;
+
+  if (window.innerWidth > 768 && sidebar.classList.contains("desktop-closed")) {
+    filterSection.innerHTML = "";
+    return;
+  }
 
   if (filters.category === "ALL") {
     filterSection.innerHTML = `<p>აირჩიე კატეგორია ფილტრის სანახავად.</p>`;
@@ -117,7 +192,6 @@ function renderFilters() {
     <button class="reset-btn" id="resetFilters"><i class="fa-solid fa-rotate-right"></i> განულება</button>
   `;
 
-  // ✅ ბრენდების ფილტრი
   document.querySelectorAll(".filter-content input[type='checkbox']").forEach(cb =>
     cb.addEventListener("change", () => {
       filters.brands = Array.from(document.querySelectorAll(".filter-content input:checked")).map(cb => cb.value);
@@ -126,7 +200,6 @@ function renderFilters() {
     })
   );
 
-  // ✅ ფასის სლაიდერი
   const minRange = document.getElementById("minRange");
   const maxRange = document.getElementById("maxRange");
   const track = document.getElementById("sliderTrack");
@@ -134,25 +207,28 @@ function renderFilters() {
   const maxLabel = document.getElementById("maxPriceVal");
 
   function fillTrack() {
-    const min = parseInt(minRange.value);
-    const max = parseInt(maxRange.value);
+    const min = parseInt(minRange.value || 0);
+    const max = parseInt(maxRange.value || 6000);
     const percent1 = (min / 6000) * 100;
     const percent2 = (max / 6000) * 100;
-    track.style.left = percent1 + "%";
-    track.style.width = (percent2 - percent1) + "%";
+    if (track) {
+      track.style.left = percent1 + "%";
+      track.style.width = (percent2 - percent1) + "%";
+    }
     filters.minPrice = min;
     filters.maxPrice = max;
-    minLabel.textContent = min + " ₾";
-    maxLabel.textContent = max + " ₾";
+    if (minLabel) minLabel.textContent = min + " ₾";
+    if (maxLabel) maxLabel.textContent = max + " ₾";
     renderProducts();
   }
 
-  minRange.addEventListener("input", fillTrack);
-  maxRange.addEventListener("input", fillTrack);
-  fillTrack();
+  if (minRange && maxRange) {
+    minRange.addEventListener("input", fillTrack);
+    maxRange.addEventListener("input", fillTrack);
+    fillTrack();
+  }
 
-  // ♻️ განულება
-  document.getElementById("resetFilters").addEventListener("click", () => {
+  document.getElementById("resetFilters")?.addEventListener("click", () => {
     filters = { search: "", category: filters.category, brands: [], minPrice: 0, maxPrice: 6000 };
     currentPage = 1;
     renderFilters();
@@ -161,16 +237,16 @@ function renderFilters() {
 }
 
 // ===============================
-// 🛒 პროდუქციის ჩვენება + Pagination
+// Render Products + Pagination
 // ===============================
 function renderProducts() {
-  if (!grid || !products.length) return;
+  if (!grid) return;
 
   const filtered = products.filter(p =>
     (filters.category === "ALL" || p.category === filters.category) &&
     (filters.brands.length === 0 || filters.brands.includes(p.brand)) &&
     (p.price >= filters.minPrice && p.price <= filters.maxPrice) &&
-    p.title.toLowerCase().includes(filters.search.toLowerCase())
+    p.title.toLowerCase().includes((filters.search || "").toLowerCase())
   );
 
   const totalPages = Math.ceil(filtered.length / productsPerPage);
@@ -197,6 +273,7 @@ function renderProducts() {
       : `<p style="text-align:center;">პროდუქტი ვერ მოიძებნა 😕</p>`;
 
     document.querySelector(".pagination")?.remove();
+
     if (totalPages > 1) {
       const paginationHTML = `
         <div class="pagination">
@@ -226,15 +303,15 @@ function renderProducts() {
 
     grid.classList.remove("fade-out");
     grid.classList.add("fade-in");
-  }, 200);
+  }, 180);
 }
 
 // ===============================
-// 🧩 ინდივიდუალური პროდუქტის ჩვენება (product.html)
+// Product detail page helper
 // ===============================
 document.addEventListener("DOMContentLoaded", async () => {
   const productContainer = document.querySelector(".product-details");
-  if (!productContainer) return; // მარტო product.html-ზე იმუშაოს
+  if (!productContainer) return;
 
   try {
     const res = await fetch("products.json");
@@ -272,7 +349,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-// Helper ფუნქცია
 function generateFeatures(features) {
   let html = "";
   for (const key in features) {
@@ -288,4 +364,24 @@ function generateFeatures(features) {
 
 function formatKey(key) {
   return key.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+}
+
+// ===============================
+// INITIAL STATE helpers
+// ===============================
+function applyInitialGridState() {
+  if (window.innerWidth > 768) {
+    if (sidebar.classList.contains("desktop-open")) {
+      productGrid.classList.add("grid-open");
+      productGrid.classList.remove("grid-closed");
+      sidebar.classList.remove("collapsed");
+    } else {
+      sidebar.classList.add("desktop-closed");
+      productGrid.classList.add("grid-closed");
+      productGrid.classList.remove("grid-open");
+      sidebar.classList.add("collapsed");
+    }
+  } else {
+    productGrid.classList.remove("grid-open", "grid-closed");
+  }
 }
