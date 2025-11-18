@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>პროდუქტის გვერდი | ტექსამყარო</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Georgian:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+  <!-- Product page styles -->
+  <link rel="stylesheet" href="product.css" />
+</head>
+
+<body>
+  <div class="page-shell">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+
+      <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>მთავარ გვერდზე დაბრუნება</span>
+      </a>
+
+      <a href="#" id="openCartDrawer" class="cart-link">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="cart-count">0</span>
+      </a>
+
+      <div class="top-bar-right">
+        <button id="openFilters" class="filter-toggle-btn">
+          <i class="fa-solid fa-sliders"></i>
+          <span>ფილტრები</span>
+        </button>
+
+        <div class="mini-info">
+          <span class="mini-dot"></span>
+          <span>ტექსამყარო • პროდუქტის დეტალური გვერდი</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT (loads from JS) -->
+    <div id="pageContent">
+      <p class="state-message">
+        <span>
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          იტვირთება პროდუქტის ინფორმაცია...
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <!-- FULLSCREEN IMAGE OVERLAY -->
+  <div id="imageOverlay" class="image-overlay">
+    <div class="image-overlay-backdrop"></div>
+    <div class="image-overlay-inner">
+      <button id="closeOverlay" class="overlay-close-btn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <img id="overlayImage" src="" alt="Product zoom" />
+    </div>
+  </div>
+
+  <!-- FILTER OVERLAY (mobile) -->
+  <div id="filtersBackdrop" class="filters-backdrop"></div>
+
+  <!-- 🛒 Floating cart bubble -->
+  <button id="cartBubble" class="cart-bubble">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span class="cart-count-bubble">0</span>
+  </button>
+
+  <!-- 🛍️ CART DRAWER -->
+  <div id="cartDrawer" class="cart-drawer">
+    <div class="cart-drawer-header">
+      <h3>თქვენი კალათა</h3>
+      <button id="closeCartDrawer" class="close-cart-btn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div id="cartDrawerItems" class="cart-drawer-items">
+      <!-- JS შევსებს -->
+    </div>
+
+    <div class="cart-drawer-footer">
+      <div class="cart-total-row">
+        <span>ჯამი:</span>
+        <strong id="cartDrawerTotal">0 ₾</strong>
+      </div>
+
+      <button class="checkout-btn" onclick="window.location.href='checkout.html'">
+        <i class="fa-solid fa-credit-card"></i>
+        შეძენა
+      </button>
+    </div>
+  </div>
+
+  <!-- DARK BACKDROP -->
+  <div id="cartBackdrop" class="cart-backdrop"></div>
+
+  <!-- Scripts -->
+  <script src="product.js"></script>
+  <script src="cart.js"></script>
+<div id="toast" class="toast">პროდუქტი დაემატა კალათაში 🛒</div>
+
+</body>
+</html>

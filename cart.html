@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>კალათა | TechWorld</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Georgian:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+  <!-- შეგიძლია გქონდეს ცალკე, ან ამავე ფაილში <style> ში -->
+  <link rel="stylesheet" href="cart.css" />
+</head>
+<body>
+
+  <header class="cart-header">
+    <div class="cart-header-left">
+      <a href="index.html" class="back-link">
+        <i class="fa-solid fa-arrow-left"></i>
+        უკან მაღაზიაში
+      </a>
+      <h1>ჩემი კალათა</h1>
+    </div>
+
+    <a href="cart.html" class="cart-icon-link">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span class="cart-count">0</span>
+    </a>
+  </header>
+
+  <main id="cartPage" class="cart-page">
+    <!-- cart.js ჩატვირთავს აქ შიგნით ყველაფერს -->
+  </main>
+
+  <script src="cart.js"></script>
+</body>
+</html>
